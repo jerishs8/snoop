@@ -1,5 +1,5 @@
-Snoop Project
-============
+Snoop Project for Termux
+========================
 
 ## Snoop Project один из самых перспективных OSINT-инструментов по поиску никнеймов.
 - [X] This is the most powerful software taking into account the CIS location.
@@ -24,38 +24,10 @@ https://raw.githubusercontent.com/snooppr/snoop/master/changelog.txt
 
 [Snoop Full version database 1.3k_websites ⚡️⚡️⚡️](https://github.com/snooppr/snoop/blob/master/websites.md "Database Snoop")  
 
-## Snoop for OS Windows and GNU/Linux  
-**Релиз/Release**  
-snoop.exe and snoop
-https://github.com/snooppr/snoop/releases  
-Snoop поставляется готовыми сборками (релиз) и не требует зависимостей (библиотек) или установки python3,  
-то есть работает на чистой машине с OS Windows или GNU/Linux.  
 ............................................................................  
 **Самостоятельная сборка ПО из исходно кода**  
 **Self-build software from source**
 
-**Native Installation**  
-Примечание: Требуемая версия python 3.7 и выше.
-
-```
-# Клонировать репозиторий
-$ git clone https://github.com/snooppr/snoop
-
-# Войти в рабочий каталог
-$ cd ~/snoop
-
-# Установить python3 и python3-pip, если они не установлены
-$ apt-get update && apt-get install python3
-
-# Установить зависимости 'requirements'
-$ pip install --upgrade pip
-$ python3 -m pip install -r requirements.txt
-# Либо установить все зависимости из 'requirements.txt' в ручную через
-$ pip3 install module
-# Если вместо флагов стран отображаются спецсимволы, доставить пакет шрифта, например монохромный
-$ apt-get install ttf-ancient-fonts или цветной apt-get install fonts-noto-color-emoji
-# На OS Windows использовать cmd или powershell (на выбор по удобству), но не WSL!
-```
 ## Snoop for Android
 **Native Installation**  
 
@@ -71,7 +43,7 @@ $ apt update && pkg upgrade && pkg install python libcrypt libxml2 libxslt git
 $ pip install --upgrade pip
 
 # Клонировать репозиторий
-$ git clone https://github.com/snooppr/snoop
+$ git clone https://github.com/snooppr/snoop -b snoop_termux
 # (Если флешкa FAT (ни ext4), в таком случае,
 # клонировать репозиторий только в ДОМАШНЮЮ директорию Termux)
 
@@ -100,7 +72,7 @@ usage: snoop.py [-h] [--donate y] [--version] [--verbose] [--base]
                 [--cert-on] [--normal] [--module y] [--update y]
                 USERNAMES [USERNAMES ...]
 
-Snoop: поиск никнейма по всем фронтам! (Version :: Сборка 1.2.4_rus Snoop Demo for GNU/Linux)
+Snoop: поиск никнейма по всем фронтам! (Version :: Сборка 1.2.3_rus Snoop Demo for termux)
 
 positional arguments:
   USERNAMES             Никнейм разыскиваемого пользователя, поддерживается
@@ -149,8 +121,6 @@ optional arguments:
                         ресурсах. Режим SNOOPninja эффективен только
                         для Snoop for GNU/Linux Full Version. По_умолчанию
                         (Windows) вкл 'нормальный режим'.
-  --module y, -m y      OSINT поиск: используя различные плагины Snoop (список
-                        плагинов будет пополняться)
   --update y            Обновить исходный код Snoop
 ```
 
@@ -165,9 +135,6 @@ $ python3 snoop.py "ivan ivanov"
 $ python3 snoop.py ivan_ivanov
 $ python3 snoop.py ivan-ivanov
 
-# Запуск на OS Windows:
-$ python snoop.py username1
-
 # Для поиска одного и более юзеров:
 $ python3 snoop.py username1 username2 username3 username4
 
@@ -179,7 +146,6 @@ $ python3 snoop.py username1 username2 username3 username4
 $ python3 snoop.py -с -t 6 -f -S -u ~/file.txt -w start
 
 # 'ctrl-c/z' — прервать поиск #не рекомендуется прерывать таким образом поиск в режиме 'SNOOPnina'.
-$ kill $(ps aux | grep python/snoop | awk '{print $2}') #лекарство для разгрузки ОЗУ при прерываниях.
 ```
 Найденные учетные записи будут храниться в ~/snoop/results/*/username.{txt.csv.html}.  
 Для доступа браузера к результатам поиска на платформе Android требуются рут права.  
@@ -193,19 +159,11 @@ $ python3 snoop.py --update y
 [^1]: Требуется установка Git.
 ```
 
-**An example of searching on a PC and on a Phone**  
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Run.gif"/>  
+**An example of searching Phone**  
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoopandroid.png" />  
 
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoopandroid.png" />
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Android%20snoop_run.png" />  
 
-**Snoop Local database**
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoop_run.png" />
-
-**One method (offline) from one plugin GEO_IP/domain Snoop**
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/GEO_IP.gif" />
-
-**Reports are also available in csv/txt/CLI/maps**
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/GEO_IPcsv.jpeg" />  
 
 ## Основные ошибки  
 

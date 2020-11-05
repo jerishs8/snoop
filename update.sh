@@ -1,3 +1,3 @@
 #!/bin/bash
 
-git stash && git pull
+git stash && git pull && git checkout snoop_termux
