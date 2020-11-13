@@ -19,7 +19,9 @@ https://raw.githubusercontent.com/snooppr/snoop/master/changelog.txt
 **Самостоятельная сборка ПО из исходно кода**  
 **Self-build software from source**
 
-## Snoop for Android/Demo
+## Snoop for Android/Demo  
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Snoop_termux.plugins.png" />  
+
 **Native Installation**  
 
 Установить [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=en "Google Play")  
