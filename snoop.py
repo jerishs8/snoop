@@ -26,7 +26,6 @@ if sys.platform == 'win32':
     from concurrent.futures import ThreadPoolExecutor
 else:
     from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
-from playsound import playsound
 from requests_futures.sessions import FuturesSession
 from rich.progress import (BarColumn, Progress,TimeRemainingColumn)
 
@@ -160,10 +159,6 @@ def print_error(err, errstr, var, verbose=False, color=True):
             Fore.CYAN + "]" +
             Style.BRIGHT + Fore.RED + f" {errstr}" +
             Style.BRIGHT + Fore.YELLOW + f" {var}" + f" {err if verbose else ''}")
-        try:
-            playsound('err.wav')
-        except:
-            pass
     else:
         print(f"[-] {errstr} {var} {err if verbose else ''}")
 
@@ -1665,11 +1660,6 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
             except:
                 webbrowser.open(str("file://" + str(dirresults) + "/results/html/" + "username" + \
                 time.strftime("%d_%m_%Y_%H_%M_%S", time_data) + ".html"))
-# Музыка.
-        try:
-            playsound('end.wav')
-        except:
-            pass
 
 if __name__ == "__main__":
     run()
