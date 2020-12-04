@@ -73,7 +73,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --donate y, -d y      Пожертвовать на развитие Snoop Project-а
+  --donate y, -d y      Пожертвовать на развитие Snoop. Приобрести full version
   --version,--about, -V НАЧАЛО! Вывод на печать версий: OS; Snoop;
                         Python и Лицензии
   --verbose, -v         Во время поиска 'username' выводить на печать
@@ -148,8 +148,7 @@ csv открывать в *office в кодировке **utf-8**, раздел�
 
 ```
 # Обновляйте Snoop для тестирования новых функций в ПО:
-$ python3 snoop.py --update y
-[^1]: Требуется установка Git.
+$ python3 snoop.py --update y #Требуется установка Git.
 ```
 
 **An example of searching Phone**  
