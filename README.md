@@ -113,7 +113,7 @@ optional arguments:
                         ОЗУ ~50pct, повторное 'гибкое' соединение на сбойных
                         ресурсах. Режим SNOOPninja эффективен только
                         для Snoop for GNU/Linux Full Version. По_умолчанию
-                        (Windows) вкл 'нормальный режим'.
+                        (Windows) вкл 'нормальный режим'
   --update y            Обновить исходный код Snoop
 ```
 
