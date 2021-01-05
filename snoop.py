@@ -27,7 +27,7 @@ if sys.platform == 'win32':
 else:
     from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from requests_futures.sessions import FuturesSession
-from rich.progress import (BarColumn, Progress,TimeRemainingColumn)
+from rich.progress import (BarColumn, Progress, TimeRemainingColumn)
 
 if sys.platform == 'win32':
     locale.setlocale(locale.LC_ALL, '')
@@ -38,7 +38,7 @@ print ("""\033[36m
 \___ \  __ \   _ \   _ \  __ \  
       | |   | (   | (   | |   | 
 _____/ _|  _|\___/ \___/  .__/  
-                         _|    \033[0m \033[37mv1.2.6\033[34;1m_rus_\033[31;1mSource Demo_Termux\033[0m
+                         _|    \033[0m \033[37mv1.2.7\033[34;1m_rus_\033[31;1mSource Demo_Termux\033[0m
 """)
 
 if sys.platform == 'win32':
@@ -57,7 +57,7 @@ else:
 	print (Fore.CYAN + "===================================================\n" + Style.RESET_ALL)
 
 module_name = (Fore.CYAN + "Snoop: поиск никнейма по всем фронтам!" + Style.RESET_ALL)
-version = "1.2.6_rus Snoop_termux (source demo)"
+version = "1.2.7_rus Snoop_termux (source demo)"
 
 dirresults = os.getcwd()
 timestart = time.time()
@@ -877,14 +877,15 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
 | Плагин Reverse Vgeocoder |
 ============================\033[0m\n
 \033[32mОбратный простенький геокодер для визуализации координат на карте OSM.
-Предназначение — CTF.
+Плагин реализует оффлайн поиск цели по заданным координатам и предоставляет статистическую и визуализированную информацию.
+Предназначение плагина — CTF.
 В будущем 'Reverse Vgeocoder' планируется развить до ПРО-уровня.\033[0m
 
 \033[32;1m========================
 | Плагин Yandex_parser |
 ========================\033[0m\n
 \033[32mПлагин позволяет получить информацию о пользователе/пользователях сервисов Яндекс:
-Я_Кью; Я_Маркет; Я_Музыка; Я_Дзен; Я_Район; Я_Коллекции; Я_Диск; E-mail, Name.
+Я_Отзывы; Я_Кью; Я_Маркет; Я_Музыка; Я_Дзен; Я_Район; Я_Коллекции; Я_Диск; E-mail, Name.
 И связать полученные данные между собой с высокой скоростью и массштабно.
 Предназначение — OSINT.
 
@@ -903,15 +904,15 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
                 snoopplugins.module1()
             elif mod == '2':
                 table = Table(title = Style.BRIGHT + Fore.GREEN + "Выбран плагин" + Style.RESET_ALL, style="green")
-                table.add_column("Reverse Vgeocoder_v0.1", style="green")
+                table.add_column("Reverse Vgeocoder_v0.2", style="green")
                 table.add_row('Визуализация Географических координат')
                 console = Console()
                 console.print(table)
                 snoopplugins.module2()
             elif mod == '3':
                 table = Table(title = Style.BRIGHT + Fore.GREEN + "Выбран плагин" + Style.RESET_ALL, style="green")
-                table.add_column("Yandex_parser_v0.1", style="green")
-                table.add_row('Яндекс парсер: Я_Кью; Я_Маркет; Я_Музыка; Я_Дзен; Я_Район; Я_Коллекции; Я_Диск; E-mail; Name.')
+                table.add_column("Yandex_parser_v0.2", style="green")
+                table.add_row('Яндекс парсер: Я_Отзывы; Я_Кью; Я_Маркет; Я_Музыка; Я_Дзен; Я_Район; Я_Коллекции; Я_Диск; E-mail; Name.')
                 console = Console()
                 console.print(table)
                 snoopplugins.module3()

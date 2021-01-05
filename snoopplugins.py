@@ -23,7 +23,7 @@ from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from requests.adapters import HTTPAdapter
 from requests_futures.sessions import FuturesSession
 from rich.console import Console
-from rich.progress import (Progress, TimeRemainingColumn)
+from rich.progress import (BarColumn, Progress, TimeRemainingColumn)
 from rich.table import Table
 from urllib.parse import urlparse
 
@@ -104,7 +104,7 @@ def module3():
         dicYa = {}
 
         def parsingYa(login):
-            # Запись в txt
+# Запись в txt
             if Ya == '4':
                 file_txt = open(dirresults + "/results/Yandex_parser/" + str(hvostfile) + '_' + time.strftime("%d_%m_%Y_%H_%M_%S", time_data) + ".txt", "w", encoding="utf-8")
             # raise Exception("")
@@ -113,7 +113,7 @@ def module3():
 
             progressYa = Progress("[progress.percentage]{task.percentage:>3.0f}%", auto_refresh=False)
 
-    # Парсинг
+# Парсинг
             for login in progressYa.track(listlogin, description=""):
                 urlYa = f'https://yandex.ru/collections/api/users/{login}/'
                 try:
@@ -150,6 +150,7 @@ def module3():
                     console = Console()
                     console.print(table1)
 
+                    otzyv=f"https://reviews.yandex.ru/user/{pub}"
                     market=f"https://market.yandex.ru/user/{pub}/reviews"
                     collections=f"https://yandex.ru/collections/user/{login}/"
                     if Ya == '3':
@@ -160,6 +161,7 @@ def module3():
                     qu=f"https://yandex.ru/q/profile/{pub}/"
                     raion=f"https://local.yandex.ru/users/{pub}/"
 
+                    print("\033[32;1mЯ.Отзывы:\033[0m", otzyv)
                     print("\033[32;1mЯ.Маркет:\033[0m", market)
                     print("\033[32;1mЯ.Картинки:\033[0m", collections)
                     print("\033[32;1mЯ.Музыка:\033[0m", music)
@@ -167,9 +169,9 @@ def module3():
                     print("\033[32;1mЯ.Кью:\033[0m", qu)
                     print("\033[32;1mЯ.Район:\033[0m", raion)
 
-                    yalist=[market, collections, music, dzen, qu, raion]
+                    yalist=[otzyv, market, collections, music, dzen, qu, raion]
 
-                    file_txt.write(f"{login} | {email} | {name}\n{market}\n{collections}\n{music}\n{dzen}\n{qu}\n{raion}\n\n\n",)
+                    file_txt.write(f"{login} | {email} | {name}\n\n{otzyv}\n{market}\n{collections}\n{music}\n{dzen}\n{qu}\n{raion}",)
                     progressYa.refresh()
 
                 for webopen in yalist:
@@ -179,7 +181,7 @@ def module3():
                         webbrowser.open(webopen)
 
             if Ya == '4':
-    # запись в txt концовка
+# запись в txt концовка
                 file_txt.write(f"\nНеобработанные данные из файла '{hvostfile}':\n")
                 for badsites in wZ1bad:
                     file_txt.write(f"{badsites}\n")
@@ -202,12 +204,12 @@ def module3():
 [help] --> Справка\n\
 [q] --> Выход\n================================================================\n\n")
 
-        # Выход
+# Выход
         if Ya == "q":
             print(Style.BRIGHT + Fore.RED + "Выход")
             sys.exit()
 
-    # Help
+# Help
         elif Ya == "help":
             print("""\033[32;1m└──[Справка]
 
@@ -244,7 +246,7 @@ username3
 Все результаты сохраняются в '\033[36m~/snoop/results/Yandex_parser/*\033[0m\033[32m'\033[0m
 """)
             print("\033[36;1m================================================================\033[0m")
-    # Указать login
+# Указать login
         elif Ya == '1':
             if sys.platform != 'win32':
                 login = input("\033[36m└──Введите username/login разыскиваемого пользователя, например,\033[0m\033[32;1m bobbimonov\033[0m\n")
