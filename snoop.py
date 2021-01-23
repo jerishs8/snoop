@@ -488,7 +488,9 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
 # Ответы message (разные локации).
         if error_type == "message":
             error = net_info.get("errorMsg")
-            error2 = net_info.get("errorMsg2")
+            error2 = net_info.get("errоrMsg2")
+            if net_info.get("errorMsg2"):
+                sys.exit()
 #            print(r.text) #проверка ответа (+- '-S')
             if error2 in r.text:
                 if not print_found_only:
@@ -799,10 +801,11 @@ https://github.com/snooppr/snoop/releases, а так же лицензия      
                         action="store_true", dest="reports", default=False,
                         help="Сохранять найденные странички пользователей в локальные файлы"
                         )
-    parser.add_argument("--cert-on", "-C", default=False,
+    parser.add_argument("--cert-off", "-C", default=False,
                         action="store_true", dest="cert",
                         help="""Выкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
-                        на серверах включена на Snoop for Android, что повышает скорость поиска, но дает больший % ложных срабатываний"""
+                                на серверах включена на Snoop for Android, что повышает скорость поиска,
+                                но дает больший percent ложных срабатываний"""
                         )
     parser.add_argument("--normal", "-N",
                         action="store_true", dest="norm", default=True,
