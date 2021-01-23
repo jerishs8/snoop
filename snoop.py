@@ -38,7 +38,7 @@ print ("""\033[36m
 \___ \  __ \   _ \   _ \  __ \  
       | |   | (   | (   | |   | 
 _____/ _|  _|\___/ \___/  .__/  
-                         _|    \033[0m \033[37mv1.2.7_A\033[34;1m_rus_\033[31;1mSource Demo_Termux\033[0m
+                         _|    \033[0m \033[37mv1.2.8\033[34;1m_rus_\033[31;1mSource Demo_Termux\033[0m
 """)
 
 if sys.platform == 'win32':
@@ -57,7 +57,7 @@ else:
 	print (Fore.CYAN + "===================================================\n" + Style.RESET_ALL)
 
 module_name = (Fore.CYAN + "Snoop: поиск никнейма по всем фронтам!" + Style.RESET_ALL)
-version = "1.2.7_A_rus Snoop_termux (source demo)"
+version = "1.2.8_rus Snoop_termux (source demo)"
 
 dirresults = os.getcwd()
 timestart = time.time()
