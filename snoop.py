@@ -38,7 +38,7 @@ print ("""\033[36m
 \___ \  __ \   _ \   _ \  __ \  
       | |   | (   | (   | |   | 
 _____/ _|  _|\___/ \___/  .__/  
-                         _|    \033[0m \033[37mv1.2.7\033[34;1m_rus_\033[31;1mSource Demo_Termux\033[0m
+                         _|    \033[0m \033[37mv1.2.7_A\033[34;1m_rus_\033[31;1mSource Demo_Termux\033[0m
 """)
 
 if sys.platform == 'win32':
@@ -57,7 +57,7 @@ else:
 	print (Fore.CYAN + "===================================================\n" + Style.RESET_ALL)
 
 module_name = (Fore.CYAN + "Snoop: поиск никнейма по всем фронтам!" + Style.RESET_ALL)
-version = "1.2.7_rus Snoop_termux (source demo)"
+version = "1.2.7_A_rus Snoop_termux (source demo)"
 
 dirresults = os.getcwd()
 timestart = time.time()
@@ -273,7 +273,7 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
 # Создать много_поточный/процессный сеанс для всех запросов.
     requests.packages.urllib3.disable_warnings() #блокировка предупреждений об сертификате.
     my_session = requests.Session()
-    if cert == False:
+    if cert == True:
         my_session.verify = False
         requests.packages.urllib3.disable_warnings()
     session0 = ElapsedFuturesSession(executor=ThreadPoolExecutor(max_workers=16), session=my_session)
@@ -801,9 +801,8 @@ https://github.com/snooppr/snoop/releases, а так же лицензия      
                         )
     parser.add_argument("--cert-on", "-C", default=False,
                         action="store_true", dest="cert",
-                        help="""Вкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
-                        на серверах отключена, что даёт меньше ошибок и больше положительных результатов
-                        при поиске username"""
+                        help="""Выкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
+                        на серверах включена на Snoop for Android, что повышает скорость поиска, но дает больший % ложных срабатываний"""
                         )
     parser.add_argument("--normal", "-N",
                         action="store_true", dest="norm", default=True,
@@ -926,7 +925,7 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
         sys.exit(0)
 
     if args.cert:
-        print(Fore.CYAN + "[+] активирована опция '-C': «проверка сертификатов на серверах»")
+        print(Fore.CYAN + "[+] активирована опция '-C': «проверка сертификатов на серверах отключена»")
     if args.site_list is not None and args.country == True:
         print(Style.BRIGHT + Fore.RED + "[опция '-s'] несовместима с [опцией '-с']")
         sys.exit(0)
