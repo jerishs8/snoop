@@ -3,7 +3,6 @@
 "Плагины Snoop Project"
 
 import csv
-import folium
 import itertools
 import json
 import locale
