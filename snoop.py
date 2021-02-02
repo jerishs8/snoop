@@ -1323,7 +1323,7 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
             except:
                 file_csv = open("results/csv/" + "username" + time.strftime("%d_%m_%Y_%H_%M_%S", time_data) + ".csv", "w", newline='', encoding="utf-8")
             usernamCSV = re.sub(" ", "_", username)
-            censor = int(censors - recensor) if args.user==False else int((censors - recensor)/kef_user)
+            censor =  int((censors - recensor)/kef_user)
             if censor >= czr:
                 writer = csv.writer(file_csv)
                 writer.writerow(['Объект',
