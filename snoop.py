@@ -712,13 +712,15 @@ Snoop в исполняемом виде (бинарник) предоставл
 напишите письмо на e-mail разработчика в свободной форме.
 Студентам по направлению ИБ/Криминалистика Snoop ПО Full Version может быть
 предоставлено на безвозмездной основе.
-email:[/bold green] [cyan]snoopproject@protonmail.com[/cyan]
-[bold green]Исходный код:[/bold green] [cyan]https://github.com/snooppr/snoop[/cyan]
+
+Snoop Full Version: плагины без ограничений; 1500+ Websites; 
+поддержка и обновление Database Snoop.
+Подключение к Web_Database Snoop (online), которая расширяется/обновляется.[/bold green]
 [bold red]Ограничения Demo Version: Websites (Database Snoop сокращена в > 19 раз);
 отключены некоторые опции/плагины; необновляемая Database_Snoop.[/bold red]
-[bold green]Snoop Full Version: плагины без ограничений; 1500+ Websites; 
-поддержка и обновление Database Snoop.
-Подключение к Web_Database Snoop (online), которая расширяется/обновляется.[/bold green]""", title="[bold red]Demo: (Публичная оферта)", 
+
+[bold green]Email:[/bold green] [cyan]snoopproject@protonmail.com[/cyan]
+[bold green]Исходный код:[/bold green] [cyan]https://github.com/snooppr/snoop[/cyan]""", title="[bold red]Demo: (Публичная оферта)", 
 border_style="bold blue"))# ,style="bold green"))
         webbrowser.open("https://sobe.ru/na/snoop_project_2020")
         print(Style.BRIGHT + Fore.RED + "Выход")
