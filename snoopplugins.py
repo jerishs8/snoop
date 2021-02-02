@@ -3,12 +3,14 @@
 "Плагины Snoop Project"
 
 import csv
+import folium
 import itertools
 import json
 import locale
 import os
 import platform
 import re
+import random
 import requests
 import shutil
 import socket
@@ -22,19 +24,32 @@ from colorama import Fore, Style, init
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from requests.adapters import HTTPAdapter
 from requests_futures.sessions import FuturesSession
-from rich.console import Console
-from rich.progress import (BarColumn, Progress, TimeRemainingColumn)
-from rich.table import Table
+try:
+    from rich.console import Console
+    from rich.progress import (track,BarColumn,TimeRemainingColumn,SpinnerColumn,TimeElapsedColumn,Progress)
+    from rich.table import Table
+except:
+    print("Обновите lib python:\n'cd ~/snoop && python3 -m pip install -r requirements.txt'")
+    sys.exit(0)
 from urllib.parse import urlparse
 
 if sys.platform == 'win32':
     locale.setlocale(locale.LC_ALL, '')
 
-init(autoreset=True)
 head0 = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 url = "https://freegeoip.app/json/"
 time_data = time.localtime()
-wZ1bad=[] #отфильтрованные ip (не ip) или отфильтрованные данные Yandex
+
+# раскраска
+init(autoreset=True)
+console = Console()
+
+def ravno():
+    console.rule(characters = '=', style="cyan bold")
+def helpend():
+    console.rule("[bold red]Конец справки")
+wZ1bad=[] #отфильтрованные ip (не ip) или отфильтрованные данные Yandex, отфильтрованные 'геокоординаты'.
+azS=[] #список результатов future request.
 
 class ElapsedFuturesSession(FuturesSession):
     """test_metrica: API:: https://pypi.org/project/requests-futures/"""
@@ -42,11 +57,12 @@ class ElapsedFuturesSession(FuturesSession):
         """test"""
         return super(ElapsedFuturesSession, self).request(method, url, *args, **kwargs)
 my_session = requests.Session()
-da = requests.adapters.HTTPAdapter(max_retries=8)
+da = requests.adapters.HTTPAdapter(max_retries=4)
 my_session.mount('https://', da)
-session1 = ElapsedFuturesSession(executor=ThreadPoolExecutor(max_workers=10), session=my_session)
 
 dirresults = os.getcwd()
+sessionY = ElapsedFuturesSession(executor=ThreadPoolExecutor(max_workers=10), session=my_session)
+progressYa = Progress(TimeElapsedColumn(), "[progress.percentage]{task.percentage:>1.0f}%", auto_refresh=False)
 
 def Erf(hvostfile):
     print(f"\033[31;1m\nНе могу найти/прочитать '\033[0m\033[31m{hvostfile}\033[0m\033[31;1m'!\033[0m \033[36m\nПожалуйста \
@@ -54,17 +70,17 @@ def Erf(hvostfile):
     print("\033[36mПо умолчанию блокнот в OS Windows сохраняет текст в кодировке — ANSI\033[0m")
     print("\033[36mОткройте файл и измените кодировку [файл ---> сохранить как ---> utf-8]")
     print("\033[36mИли удалите из файла нечитаемые символы.")
-    print("\033[36;1m================================================================\033[0m\n")
+    ravno()
     
 def donate():
     print("""
-Snoop Demo Version (Публичная оферта)
+\033[32;1mSnoop Demo Version (Публичная оферта)\033[0m \033[36m
 ===============================================================================
-╭donate/buy                                                                   ||
-├──Яндекс.Деньги (yoomoney): \033[37m4100111364257544\033[0m                                 ||
-├──Visa: \033[37m4274320047338002\033[0m                                                     ||
-└──PayPal: \033[37msnoopproject@protonmail.com\033[0m                                        ||
-                                                                              ||
+╭donate/Buy:                                                                  ||
+├──Яндекс.Деньги (yoomoney): \033[37m4100111364257544\033[0m                                 \033[36m||
+├──Visa: \033[37m4274320047338002\033[0m                                                     \033[36m||
+└──PayPal:\033[0m \033[37msnoopproject@protonmail.com\033[0m                                        \033[36m||
+==============================================================================\033[0m||
 Если вас заинтересовала Snoop Demo Version, Вы можете официально приобрести   ||
 \033[36mSnoop Full Version\033[0m, поддержав развитие проекта \033[32;1m20$\033[0m или \033[32;1m1400р\033[0m.                 ||
 При пожертвовании/покупке в сообщении укажите информацию в таком порядке:     ||
@@ -91,13 +107,13 @@ https://github.com/snooppr/snoop/releases, а так же лицензия      
     print("==============================================================================||\n",
           Fore.CYAN + f"Ограничения Demo Version: Websites (Database Snoop сокращена в > 19 раз);    ||\n"
           f"отключены некоторые опции; необновляемая и не поддерживаемая Database_Snoop.  ||\n"
-          f"Snoop Full Version: 1400+ Websites; поддержка и обновление Database Snoop.    ||\n"
+          f"Snoop Full Version: 1500+ Websites; поддержка и обновление Database Snoop.    ||\n"
       	  f"\033[36;1mПодключение к Web_Database Snoop (online), которая расширяется/обновляется.   ||\033[0m\n"
           f"===============================================================================\n")
     webbrowser.open("https://sobe.ru/na/snoop_project_2020")
     print(Style.BRIGHT + Fore.RED + "Выход")
 
-# Модуль Yandex_parser
+## Модуль Yandex_parser
 def module3():
     while True:
         listlogin = []
@@ -106,103 +122,110 @@ def module3():
         def parsingYa(login):
 # Запись в txt
             if Ya == '4':
-                file_txt = open(dirresults + "/results/Yandex_parser/" + str(hvostfile) + '_' + time.strftime("%d_%m_%Y_%H_%M_%S", time_data) + ".txt", "w", encoding="utf-8")
-            # raise Exception("")
+                file_txt = open(dirresults + "/results/Yandex_parser/" + str(hvostfile) + '_' + \
+                time.strftime("%d_%m_%Y_%H_%M_%S", time_data) + ".txt", "w", encoding="utf-8")
+            #raise Exception("")
             else:
                 file_txt = open(dirresults + "/results/Yandex_parser/" + str(login) + ".txt", "w", encoding="utf-8")
 
-            progressYa = Progress("[progress.percentage]{task.percentage:>3.0f}%", auto_refresh=False)
-
 # Парсинг
-            for login in progressYa.track(listlogin, description=""):
+            for login in listlogin:
                 urlYa = f'https://yandex.ru/collections/api/users/{login}/'
                 try:
-                    r = my_session.get(urlYa, headers = head0, timeout=3)
+                    r = sessionY.get(urlYa, headers = head0, timeout=3)
+                    azS.append(r)
                 except:
-                    print(Fore.RED + "\nОшибка\n" + Style.RESET_ALL)
-                    continue
-                try:
-                    rdict = json.loads(r.text)
-                except:
-                    rdict = {}
-                    rdict.update(public_id="Увы", display_name="-No-")
-
-                pub = rdict.get("public_id")
-                name = rdict.get("display_name")
-                email=str(login)+"@yandex.ru"
-
-                if rdict.get("display_name") == "-No-":
+                    print(Fore.RED + "\nОшибка" + Style.RESET_ALL)
                     if Ya != '4':
-                        print(Style.BRIGHT + Fore.RED + "\nНе сработало")
-                    else:
-                        wZ1bad.append(str(login))
-                        continue
+                        ravno()
                     continue
-                else:
-                    table1 = Table(title = "\n" + Style.BRIGHT + Fore.RED + str(login) + Style.RESET_ALL, style="green")
-                    table1.add_column("Имя", style="magenta")
-                    table1.add_column("Логин", style="cyan")
-                    table1.add_column("E-mail", style="cyan")
-                    if Ya == '3':
-                        table1.add_row(name,"Пропуск","Пропуск")
-                    else:
-                        table1.add_row(name,login,email)
-                    console = Console()
-                    console.print(table1)
 
-                    otzyv=f"https://reviews.yandex.ru/user/{pub}"
-                    market=f"https://market.yandex.ru/user/{pub}/reviews"
-                    collections=f"https://yandex.ru/collections/user/{login}/"
-                    if Ya == '3':
-                        music=f"\033[33;1mПропуск\033[0m"
-                    else:
-                        music=f"https://music.yandex.ru/users/{login}/tracks"
-                    dzen=f"https://zen.yandex.ru/user/{pub}"
-                    qu=f"https://yandex.ru/q/profile/{pub}/"
-                    raion=f"https://local.yandex.ru/users/{pub}/"
+            with progressYa:
+                if Ya == '4':
+                    task = progressYa.add_task("", total=len(listlogin))
 
-                    print("\033[32;1mЯ.Отзывы:\033[0m", otzyv)
-                    print("\033[32;1mЯ.Маркет:\033[0m", market)
-                    print("\033[32;1mЯ.Картинки:\033[0m", collections)
-                    print("\033[32;1mЯ.Музыка:\033[0m", music)
-                    print("\033[32;1mЯ.Дзен:\033[0m", dzen)
-                    print("\033[32;1mЯ.Кью:\033[0m", qu)
-                    print("\033[32;1mЯ.Район:\033[0m", raion)
+                for reqY, login in zip(azS, listlogin):
+                    if Ya == '4':
+                        progressYa.refresh()
+                        progressYa.update(task, advance=1)
+                    rY=reqY.result()
+                    try:
+                        rdict = json.loads(rY.text)
+                    except:
+                        rdict = {}
+                        rdict.update(public_id="Увы", display_name="-No-")
 
-                    yalist=[otzyv, market, collections, music, dzen, qu, raion]
+                    pub = rdict.get("public_id")
+                    name = rdict.get("display_name")
+                    email=str(login)+"@yandex.ru"
 
-                    file_txt.write(f"{login} | {email} | {name}\n\n{otzyv}\n{market}\n{collections}\n{music}\n{dzen}\n{qu}\n{raion}",)
-                    progressYa.refresh()
-
-                for webopen in yalist:
-                    if webopen == music and Ya == '3':
+                    if rdict.get("display_name") == "-No-":
+                        if Ya != '4':
+                            print(Style.BRIGHT + Fore.RED + "\nНе сработало")
+                            console.rule(characters = '=', style="cyan bold\n")
+                        else:
+                            wZ1bad.append(str(login))
+                            continue
                         continue
                     else:
-                        webbrowser.open(webopen)
+                        table1 = Table(title = "\n" + Style.BRIGHT + Fore.RED + str(login) + Style.RESET_ALL, style="green")
+                        table1.add_column("Имя", style="magenta")
+                        table1.add_column("Логин", style="cyan")
+                        table1.add_column("E-mail", style="cyan")
+                        if Ya == '3':
+                            table1.add_row(name,"Пропуск","Пропуск")
+                        else:
+                            table1.add_row(name,login,email)
+                        console.print(table1)
 
+                        otzyv=f"https://reviews.yandex.ru/user/{pub}"
+                        market=f"https://market.yandex.ru/user/{pub}/reviews"
+                        collections=f"https://yandex.ru/collections/user/{login}/"
+                        if Ya == '3':
+                            music=f"\033[33;1mПропуск\033[0m"
+                        else:
+                            music=f"https://music.yandex.ru/users/{login}/tracks"
+                        dzen=f"https://zen.yandex.ru/user/{pub}"
+                        qu=f"https://yandex.ru/q/profile/{pub}/"
+
+                        print("\033[32;1mЯ.Отзывы:\033[0m", otzyv)
+                        print("\033[32;1mЯ.Маркет:\033[0m", market)
+                        print("\033[32;1mЯ.Картинки:\033[0m", collections)
+                        print("\033[32;1mЯ.Музыка:\033[0m", music)
+                        print("\033[32;1mЯ.Дзен:\033[0m", dzen)
+                        print("\033[32;1mЯ.Кью:\033[0m", qu)
+
+                        yalist=[otzyv, market, collections, music, dzen, qu]
+
+                        file_txt.write(f"{login} | {email} | {name}\n{otzyv}\n{market}\n{collections}\n{music}\n{dzen}\n{qu}\n\n")
+
+                    for webopen in yalist:
+                        if webopen == music and Ya == '3':
+                            continue
+                        else:
+                            webbrowser.open(webopen)
+            ravno()
+            azS.clear()
+
+# сохранение в html
             if Ya == '4':
 # запись в txt концовка
-                file_txt.write(f"\nНеобработанные данные из файла '{hvostfile}':\n")
+                file_txt.write(f"\nНеобработанные данные из файла '{hvostfile}' ({len(wZ1bad)}):\n")
                 for badsites in wZ1bad:
                     file_txt.write(f"{badsites}\n")
                 file_txt.write(f"\nОбновлено: " + time.strftime("%d/%m/%Y_%H:%M:%S", time_data) + ".")
                 file_txt.close()
     # Конец функции
 
-        if sys.platform != 'win32':
-            Ya = input("\033[36m[\033[0m\033[32;1m1\033[0m\033[36m] --> Указать логин пользователя\n\
+        print(
+"\n\033[36m[\033[0m\033[32;1m1\033[0m\033[36m] --> Указать логин пользователя\n\
 [\033[0m\033[32;1m2\033[0m\033[36m] --> Указать публичную ссылку на Яндекс.Диск\n\
 [\033[0m\033[32;1m3\033[0m\033[36m] --> Указать идентификатор пользователя\n\
 [\033[0m\033[32;1m4\033[0m\033[36m] --> Указать файл с именами пользователей\n\
 [\033[0m\033[32;1mhelp\033[0m\033[36m] --> Справка\n\
-[\033[0m\033[31;1mq\033[0m\033[36m] --> Выход\n\033[36;1m================================================================\033[0m\n\n")
-        else:
-            Ya = input("[1] --> Указать логин пользователя\n\
-[2] --> Указать публичную ссылку на Яндекс.Диск\n\
-[3] --> Указать идентификатор пользователя\n\
-[4] --> Указать файл с именами пользователей\n\
-[help] --> Справка\n\
-[q] --> Выход\n================================================================\n\n")
+[\033[0m\033[31;1mq\033[0m\033[36m] --> Выход\n")
+
+        Ya = input()
 
 # Выход
         if Ya == "q":
@@ -214,9 +237,11 @@ def module3():
             print("""\033[32;1m└──[Справка]
 
 Однопользовательский режим\033[0m
-\033[32m* Логин — левая часть до символа '@', например, bobbimonov@ya.ru, логин '\033[36mbobbimonov\033[0m\033[32m'.
+\033[32m* Логин — левая часть до символа '@', например, bobbimonov@ya.ru, логин
+'\033[36mbobbimonov\033[0m\033[32m'.
 * Публичная ссылка на Яндекс.Диск — это ссылка для скачивания/просмотра материалов,
-которую пользователь выложил в публичный доступ, например '\033[36mhttps://yadi.sk/d/7C6Z9q_Ds1wXkw\033[0m\033[32m'.
+которую пользователь выложил в публичный доступ, например,
+'\033[36mhttps://yadi.sk/d/7C6Z9q_Ds1wXkw\033[0m\033[32m'.
 * Идентификатор — хэш, который указан в url на странице пользователя,
 например, в сервисе Я.Район: https://local.yandex.ru/users/tr6r2c8ea4tvdt3xmpy5atuwg0/
 идентификатор — '\033[36mtr6r2c8ea4tvdt3xmpy5atuwg0\033[0m\033[32m'.
@@ -243,30 +268,27 @@ username3
 Плагин генерирует, но не проверяет 'доступность' персональных страниц пользователей
 по причине: частая защита страниц Я.капчей.
 
-Все результаты сохраняются в '\033[36m~/snoop/results/Yandex_parser/*\033[0m\033[32m'\033[0m
-""")
-            print("\033[36;1m================================================================\033[0m")
+Все результаты сохраняются в '\033[36m~/snoop/results/Yandex_parser/*\033[0m\033[32m'\033[0m""")
+            helpend()
+
 # Указать login
         elif Ya == '1':
-            if sys.platform != 'win32':
-                login = input("\033[36m└──Введите username/login разыскиваемого пользователя, например,\033[0m\033[32;1m bobbimonov\033[0m\n")
-            else:
-                login = input("└──Введите username/login разыскиваемого пользователя, например, bobbimonov\n")
+            print("\033[36m└──Введите username/login разыскиваемого пользователя, например,\033[0m\033[32;1m bobbimonov\033[0m\n")
+            login = input()
             listlogin.append(login)
 
             parsingYa(login)
 
 # Указать ссылку на Я.Диск
         elif Ya == '2':
-            if sys.platform != 'win32':
-                urlYD = input("\033[36m└──Введите публичную ссылку на Яндекс.Диск, например,\033[0m\033[32;1m https://yadi.sk/d/7C6Z9q_Ds1wXkw\033[0m\n")
-            else:
-                urlYD = input("└──Введите публичную ссылку на Яндекс.Диск, например, https://yadi.sk/d/7C6Z9q_Ds1wXkw\n")
+            print("\033[36m└──Введите публичную ссылку на Яндекс.Диск, например,\033[0m\033[32;1m https://yadi.sk/d/7C6Z9q_Ds1wXkw\033[0m\n")
+            urlYD = input()
 
             try:
                 r2 = my_session.get(urlYD, headers = head0, timeout=3)
             except:
-                print(Fore.RED + "\nОшибка\n" + Style.RESET_ALL)
+                print(Fore.RED + "\nОшибка" + Style.RESET_ALL)
+                console.rule(characters = '=', style="cyan bold\n")
                 continue
             try:
                 login = r2.text.split('displayName":"')[1].split('"')[0]
@@ -280,14 +302,13 @@ username3
 
 # Указать идентиффикатор Яндекс пользователя
         elif Ya == '3':
-            if sys.platform != 'win32':
-                login = input("\033[36m└──Введите идентификатор пользователя Яндекс, например,\033[0m\033[32;1m tr6r2c8ea4tvdt3xmpy5atuwg0\033[0m\n")
-            else:
-                login = input("└──Введите идентификатор пользователя Яндекс, например, tr6r2c8ea4tvdt3xmpy5atuwg0\n")
+            print("\033[36m└──Введите идентификатор пользователя Яндекс, например,\033[0m\033[32;1m tr6r2c8ea4tvdt3xmpy5atuwg0\033[0m\n")
+            login = input()
             listlogin.append(login)
 
             if len(login) != 26:
-                print(Style.BRIGHT + Fore.RED + "└──Неверно указан идентификатор пользователя\n" + Style.RESET_ALL)
+                print(Style.BRIGHT + Fore.RED + "└──Неверно указан идентификатор пользователя" + Style.RESET_ALL)
+                ravno()
             else:
                 parsingYa(login)
 
@@ -296,12 +317,14 @@ username3
             print("\033[31;1m└──В Demo version этот метод плагина недоступен\033[0m\n")
             donate()
         else:
-            print(Style.BRIGHT + Fore.RED + "├──Неверный выбор" + Style.RESET_ALL)
+            print(Style.BRIGHT + Fore.RED + "└──Неверный выбор" + Style.RESET_ALL)
+            ravno()
 
+## Модуль Reverse Vgeocoder
 def module2():
     print(Style.BRIGHT + Fore.RED + "└──Плагин Reverse Vgeocoder 'сложен' и не поддерживается в Snoop_termux\n\nВыход\n" + Style.RESET_ALL)
 
-# Модуль GEO/IP
+## Модуль GEO_IP/domain
 def module1():
     try:
         os.makedirs(str(dirresults + "/results/domain"))
@@ -324,7 +347,7 @@ def module1():
                 res6 = res46[-1][4][0]
         except:
             res6 = "-"
-#            print(res46)
+        #print(res46)
         return res4, res6
 
 # Запрос future request
@@ -343,38 +366,32 @@ def module1():
         return "Err"
 
 # Выбор поиска одиночный или '-f'
-    if sys.platform != 'win32':
-        dip = input("\n\033[36mВведите домен (пример:\033[0m \033[32;1mexample.com\033[0m\033[36m), или IPv4/IPv6 (пример:\033[0m \033[32;1m8.8.8.8\033[0m\033[36m),\n\
+    ravno()
+    print("\n\033[36mВведите домен (пример:\033[0m \033[32;1mexample.com\033[0m\033[36m), или IPv4/IPv6 (пример:\033[0m \033[32;1m8.8.8.8\033[0m\033[36m),\n\
 или url (пример: \033[32;1mhttps://example.com/1/2/3/foo\033[0m\033[36m), \n\
-или укажите файл_массив, выбрав ключ (пример:\033[0m \033[32;1m--file\033[0m\033[36m или\033[0m \033[32;1m-f\033[0m\033[36m)\n\
-[\033[0m\033[32;1m-f\033[0m\033[36m] --> обработатка массива данных\n\
+или укажите файл_с данными, выбрав ключ (пример:\033[0m \033[32;1m--file\033[0m\033[36m или\033[0m \033[32;1m-f\033[0m\033[36m)\n\
+[\033[0m\033[32;1m-f\033[0m\033[36m] --> обработатка файла данных\n\
 [\033[0m\033[32;1menter\033[0m\033[36m] --> информация о своем GEO_IP\n\
-[\033[0m\033[31;1mq\033[0m\033[36m] --> Выход\n\033[36;1m================================================================\033[0m\n\n")
-    else:
-        dip = input("\nВведите домен (пример: example.com), или IPv4/IPv6 (пример: 93.184.216.34),\n\
-или url (пример: https://example.com/1/2/3/foo), \n\
-или укажите файл_массив, выбрав ключ (пример --file или -f)\n\
-[-f] --> обработатка массива данных\n\
-[enter] --> информация о своем GEO_IP\n\
-[q] --> Выход\n================================================================\n\n")
+[\033[0m\033[31;1mq\033[0m\033[36m] --> Выход")
+    dip = input("\n")
 
-#выход
+# выход
     if dip == "q":
         print(Style.BRIGHT + Fore.RED + "Выход")
         sys.exit()
 
-# проверка массива
+# проверка данных
     elif dip == '--file' or dip == '-f':
         while True:
-            if sys.platform == 'win32':
-                dipbaza = input("Выберите тип поиска\n[1] --> Online (медленно)\n[2] --> Offline (быстро)\n"\
-"[help] --> Справка\n\
-[q]--> Выход\n================================================================\n\n")
-            else:
-                dipbaza = input("""\033[36m├──Выберите тип поиска\n[\033[0m\033[32;1m1\033[0m\033[36m] --> Online (медленно)\n[\033[0m\033[32;1m2\033[0m\033[36m] --> Offline (быстро)
+            print("""\033[36m├──Выберите тип поиска
+│
+[\033[0m\033[32;1m1\033[0m\033[36m] --> Online (медленно)
+[\033[0m\033[32;1m2\033[0m\033[36m] --> Offline (быстро)
+[\033[0m\033[32;1m3\033[0m\033[36m] --> Offline_тихий (очень быстро)
 [\033[0m\033[32;1mhelp\033[0m\033[36m] --> Справка\n\
-[\033[31;1mq\033[0m\033[36m] --> Выход\033[0m\n
-\033[36;1m================================================================\033[0m\n""")
+[\033[31;1mq\033[0m\033[36m] --> Выход\033[0m""")
+
+            dipbaza = input('\n')
 
 # Выход
             if dipbaza == "q":
@@ -383,12 +400,12 @@ def module1():
 # Справка
             elif dipbaza == "help":
                 print("\033[32;1m└──Справка\033[0m\n")
-                print("""\033[32mМетод '\033[32;1mOnline поиск\033[0m\033[32m'. Модуль GEO_IP/domain от Snoop Project использует публичный api
-и создает статистическую и визуализированную информацию по ip/url/domain цели (массиве данных)
+                print("""\033[32mРежим '\033[32;1mOnline поиск\033[0m\033[32m'. Модуль GEO_IP/domain от Snoop Project использует публичный api
+и создает статистическую и визуализированную информацию по ip/url/domain цели (массиву данных)
     (ограничения: запросы ~15к/час, невысокая скорость обработки данных, отсутствие информации о провайдерах).
 Преимущества использования 'Online поиска':
-в качестве массива данных можно использовать не только ip-адреса, но и domain/url.
-Пример файла массива данных (массив.txt):
+в качестве входных данных можно использовать не только ip-адреса, но и domain/url.
+Пример файла с данными (список.txt):
 
 \033[36m1.1.1.1
 2606:2800:220:1:248:1893:25c8:1946
@@ -396,20 +413,23 @@ google.com
 https://example.org/fo/bar/7564
 случайная строка\033[0m
 
-\033[32mМетод '\033[32;1mOffline поиск\033[0m\033[32m'. Модуль GEO_IP/domain от Snoop Project использует специальные базы данных
+\033[32mРежим '\033[32;1mOffline поиск\033[0m\033[32m'. Модуль GEO_IP/domain от Snoop Project использует специальные базы данных
 и создает статистическую и визуализированную информацию только по ip цели (массиве данных)
     (базы данных доступны свободно от компании Maxmind).
 Преимущества использования 'Offline поиска': скорость (обработка миллионов ip без задержек),
 стабильность (отсутствие зависимости от интернет соединения и персональных настроек DNS/IPv6 пользователя),
 масштабный охват/покрытие (предоставляется информация о интернет-провайдерах).
-Пример файла массива данных (массив.txt):
+
+Режим '\033[32;1mOffline_тихий поиск\033[0m\033[32m':: Тот же режим, что и режим 'Offline', но не выводит на печать промежуточные таблицы с данными.
+Даёт прирост в производительности в ~4 раза.
+Пример файла с данными (список.txt):
 
 \033[36m8.8.8.8
 93.184.216.34
 2606:2800:220:1:248:1893:25c8:1946
 случайная строка\033[0m
 
-\033[32mSnoop довольно умён и способен определять в массиве данных: IPv4/v6/domain/url, вычищая ошибки и случайные строки.
+\033[32mSnoop довольно умён и способен определять и различать во входных данных: IPv4/v6/domain/url, вычищая ошибки и случайные строки.
 По окончанию обработки данных пользователю предоставляются:
 статистические отчеты в [txt/csv и визуализированные данные на карте OSM].
 
@@ -417,11 +437,11 @@ https://example.org/fo/bar/7564
 Например, если у пользователя имеется список ip адресов от DDoS атаки,
 он может проанализировать откуда исходила  max/min атака и от кого (провайдеры).
 Например, решая квесты CTF, где используются GPS/IPv4/v6.\033[0m""")
-                print("\033[36;1m================================================================\033[0m")
+                helpend()
 
 # Оффлайн поиск
 # Открываем GeoCity
-            elif dipbaza == "2":
+            elif dipbaza == "2" or dipbaza == "3":
                 while True:
                     print("\033[31;1m└──В Demo version этот метод плагина недоступен\033[0m\n")
                     donate()
@@ -434,11 +454,13 @@ https://example.org/fo/bar/7564
                 print("\033[31;1m└──В Demo version этот метод плагина недоступен\033[0m\n")
                 donate()
                 break
-    # Неверный выбор ключа при оффлайн/онлайн поиске. Выход
-            else:
-                print(Style.BRIGHT + Fore.RED + "├──Неверный выбор" + Style.RESET_ALL)
 
-#одиночный запрос
+# Неверный выбор ключа при оффлайн/онлайн поиске. Выход
+            else:
+                print(Style.BRIGHT + Fore.RED + "└──Неверный выбор" + Style.RESET_ALL)
+                ravno()
+
+# одиночный запрос
     else:
         if dip == "":
             pass
@@ -467,13 +489,10 @@ https://example.org/fo/bar/7564
             T3="stop"
             T4="stop"
             T5="-"
-#            print(Fore.RED + "Err connect" + Style.RESET_ALL)
             print("""\033[31;1m\n
 |\ | _ ._  _
 | \|(_)| |(/_
         \033[0m""")
-
-
 
 # IP/Домен > Домен и IPv4v6
         try:
@@ -496,7 +515,6 @@ https://example.org/fo/bar/7564
             table.add_row(T1,T5,resD1,T2)
         else:
             table.add_row(T1,res4,res6,resD1,T2)
-        console = Console()
         console.print(table)
         if T3 == "stop" and T4 =="stop":
             print("\n")
