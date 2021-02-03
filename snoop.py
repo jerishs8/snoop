@@ -322,7 +322,7 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
     session0 = ElapsedFuturesSession(executor=ThreadPoolExecutor(max_workers=16), session=my_session)
     if not sys.platform == 'win32':
         if "arm" in platform.platform(aliased=True, terse=0) or "aarch64" in platform.platform(aliased=True, terse=0):
-            session1 = ElapsedFuturesSession(executor=ThreadPoolExecutor(max_workers=13), session=my_session)
+            session1 = ElapsedFuturesSession(executor=ThreadPoolExecutor(max_workers=10), session=my_session)
         else:
             session1 = ElapsedFuturesSession(executor=ProcessPoolExecutor(max_workers=30), session=my_session)
     else:
@@ -690,8 +690,8 @@ def run():
 [bold green]При пожертвовании/покупке в сообщении укажите информацию в таком порядке:[/bold green]
 
     [cyan]"Пожертвование на развитие Snoop Project: 20$ ваш e-mail
-    Full Version for Windows RU", или "Full Version for Linux RU
-    Ваш статус: Физ.лицо; ИП; Юр.лицо (если покупка ПО)"[/cyan]
+    Full Version for Windows RU или Full Version for Linux RU,
+    статус пользователя: Физ.лицо; ИП; Юр.лицо (если покупка ПО)"[/cyan]
 
 [bold green]В ближайшее время на email пользователя придёт чек и ссылка для скачивания
 Snoop Full Version готовой сборки то есть исполняемого файла, 
