@@ -114,7 +114,7 @@ Snoop Full Version: плагины без ограничений; 1500+ Websites
 border_style="bold blue"))# ,style="bold green"))
     webbrowser.open("https://sobe.ru/na/snoop_project_2020")
     print(Style.BRIGHT + Fore.RED + "Выход")
-    sys.exit(0)
+    sys.exit()
 
 ## Модуль Yandex_parser
 def module3():
