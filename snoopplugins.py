@@ -49,6 +49,7 @@ def ravno():
     console.rule(characters = '=', style="cyan bold")
 def helpend():
     console.rule("[bold red]Конец справки")
+
 wZ1bad=[] #отфильтрованные ip (не ip) или отфильтрованные данные Yandex, отфильтрованные 'геокоординаты'.
 azS=[] #список результатов future request.
 
@@ -329,10 +330,6 @@ def module2():
 
 ## Модуль GEO_IP/domain
 def module1():
-    try:
-        os.makedirs(str(dirresults + "/results/domain"))
-    except:
-        pass
 # Домен > IPv4/v6
     def res46(dipp):
         try:
