@@ -263,28 +263,24 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
     username = re.sub(" ", "%20", username)
 
 # Предотвращение 'DDoS' из-за невалидных логинов; номеров телефонов, ошибок поиска из-за спецсимволов.
-    ermail=[]
     with open('domainlist.txt', 'r', encoding="utf-8") as err:
-        for line in err.readlines():
-            errdata=line[:-1]
-            ermail.append(errdata)
+        ermail = err.read().splitlines()
     if any(ermail in username for ermail in ermail):
         print(Style.BRIGHT + Fore.RED + "\nE-mail адрес будет обрезан до валидного состояния")
         username = username.rsplit(sep='@', maxsplit=1)[0]
 
     with open('specialcharacters', 'r', encoding="utf-8") as errspec:
         s1 = errspec.read()
-        my_list = list(s1)
-        if any(my_list in username for my_list in my_list):
+        my_list_bad = list(s1)
+        if any(my_list_bad in username for my_list_bad in my_list_bad):
             print(Style.BRIGHT + Fore.RED + f"недопустимые символы в username: {username}")
             sys.exit()
 
     ernumber=['79', '89', "38", "37"]
     if any(ernumber in username[0:2] for ernumber in ernumber):
-        if len(username) >= 10 and len(username) <= 13:
-            if username.isdigit() == True:
-                print(Style.BRIGHT + Fore.RED + "\nSnoop выслеживает учётки пользователей, но не номера телефонов...")
-                sys.exit()
+        if len(username) >= 10 and len(username) <= 13 and username.isdigit() == True:
+            print(Style.BRIGHT + Fore.RED + "\nSnoop выслеживает учётки пользователей, но не номера телефонов...")
+            sys.exit()
     elif username[0] == "+" or username[0] == ".":
         print (Style.BRIGHT + Fore.RED + "\nПубличный логин, начинающийся с такого символа, практически всегда невалидный...")
         sys.exit()
@@ -867,7 +863,7 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
                 snoopplugins.module1()
             elif mod == '2':
                 table = Table(title = Style.BRIGHT + Fore.GREEN + "Выбран плагин" + Style.RESET_ALL, style="green")
-                table.add_column("Reverse Vgeocoder_v0.3", style="green")
+                table.add_column("Reverse Vgeocoder_v0.4", style="green")
                 table.add_row('Визуализация Географических координат')
                 console.print(table)
                 snoopplugins.module2()
@@ -1072,12 +1068,35 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
 
 # Опция указания файла-списка разыскиваемых пользователей '-u'.
     if args.user:
+        userlists=[]
+        userlists_bad=[]
+        with open('specialcharacters', 'r', encoding="utf-8") as errspec:
+            s1 = errspec.read()
+            my_list_bad = list(s1)
         try:
             patchuserlist = ("{}".format(args.user))
-            userfile=patchuserlist.split('/')[-1]
+            if sys.platform != 'win32':
+                userfile=patchuserlist.split('/')[-1]
+            else:
+                userfile=patchuserlist.split('\\')[-1]
             with open(patchuserlist, "r", encoding="utf8") as u1:
                 userlist=[line.strip() for line in u1.read().splitlines()]
-                userlist.remove("")# удаляем пустые элементы userlist=list(filter(None, userlist))
+                for i in userlist:
+                    if any(D in i for D in my_list_bad):
+                        userlists_bad.append(i)
+                        continue
+                    elif any(' ' in i for i in i):
+                        g1=i.split()
+                        g11 = " ".join(g1)
+                        if g11 not in userlist:
+                            userlists.append(g11)
+                    elif i == "":
+                        continue
+                    else:
+                        userlists.append(i)
+            if userlists_bad:
+                print(Style.RESET_ALL + Style.BRIGHT + Fore.RED + f"Следующие [username] из '{userfile}' содержат ошибки и будут пропущены:")
+                print(Style.BRIGHT + Fore.RED + f"{userlists_bad}" + Style.RESET_ALL)
         except:
             print(f"\033[31;1mНе могу найти_прочитать '{userfile}'!\033[0m \033[36mПожалуйста, укажите текстовый файл в кодировке —\033[0m \033[36;1mutf-8.\033[0m\n")
             print("\033[36mПо умолчанию блокнот в OS Windows сохраняет текст в кодировке — ANSI\033[0m")
@@ -1085,7 +1104,7 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
             print("\033[36mИли удалите из файла нечитаемые символы.")
             sys.exit()
         print(Fore.CYAN + f"[+] активирована опция '-u': «розыск user-ов из файла: \033[36;1m{userfile}\033[0m\033[36m»\033[0m")
-        print(Fore.CYAN + "    Будем искать:" + f" {userlist[:3]}" + " и других..." + Style.RESET_ALL)
+        print(Fore.CYAN + "    Будем искать:" + f" {userlists[:3]}" + " и других..." + Style.RESET_ALL)
 
 # Опция обновление Snoop '--update y'.
     if args.update:
@@ -1327,5 +1346,5 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
             except:
                 pass
 # Arbeiten...
-    starts(args.username) if args.user==False else starts(userlist)
+    starts(args.username) if args.user==False else starts(userlists)
 run()
