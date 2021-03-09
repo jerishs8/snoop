@@ -9,13 +9,8 @@ Snoop Project for Termux
 Is your life slideshow? Ask Snoop.  
 Snoop project is developed without taking into account the opinions of the NSA and their friends,  
 that is, it is available to the average user.
-
-History
-https://raw.githubusercontent.com/snooppr/snoop/master/changelog.txt  
-
-[Snoop Full version database 1.3k_websites ⚡️⚡️⚡️](https://github.com/snooppr/snoop/blob/master/websites.md "Database Snoop")  
-
 ............................................................................  
+
 **Самостоятельная сборка ПО из исходно кода**  
 **Self-build software from source**
 
@@ -103,10 +98,9 @@ optional arguments:
                         странам, а не по алфавиту
   --save-page, -S       Сохранять найденные странички пользователей в
                         локальные файлы
-  --cert-on, -C         Вкл проверку сертификатов на серверах. По умолчанию
-                        проверка сертификатов на серверах отключена, что даёт
-                        меньше ошибок и больше положительных результатов при
-                        поиске username
+  --cert-off, -C        Выкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
+                        на серверах включена на Snoop for Android, что повышает скорость поиска,
+                        но дает больший percent ложных срабатываний
   --normal, -N          Переключатель режимов: SNOOPninja > нормальный режим >
                         SNOOPninja. По_умолчанию (GNU/Linux Full Version) вкл
                         'режим SNOOPninja': ускорение поиска ~25pct, экономия
@@ -152,17 +146,4 @@ $ python3 snoop.py --update y #Требуется установка Git.
 ```
 
 **An example of searching Phone**  
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Android%20snoop_run.png" />  
-
-**Информация для госслужащих:** Snoop Project включен в реестр отечественного ПО. Приказ Минкомсвязи РФ №515 реестровый № 7012.
-
-**Отпечаток публичного ключа:**	[076DB9A00B583FFB606964322F1154A0203EAE9D](https://raw.githubusercontent.com/snooppr/snoop/master/PublicKey.asc "pgp key")
-
-**Лицензия Snoop Project:** https://github.com/snooppr/snoop/blob/master/COPYRIGHT
-
-[Документация](https://drive.google.com/open?id=12DzAQMgTcgeG-zJrfDxpUbFjlXcBq5ih)  
-
-**Snoop неидеален: вэб-сайты падают; закрывающие теги отсутсвуют; хостинги вовремя не оплачиваются. Время от времени необходимо следить за всем этим "Web rock 'n' roll", поэтому донаты приветствуются.**  
-[Example close/bad websites](https://drive.google.com/file/d/1CJxGRJECezDsaGwxpEw34iJ8MJ9LXCIG/view?usp=sharing)  
-
-**email:** snoopproject@protonmail.com
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Android%20snoop_run.png" />
