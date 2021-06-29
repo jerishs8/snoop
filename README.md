@@ -19,7 +19,7 @@ that is, it is available to the average user.
 
 **Native Installation**  
 
-Установить [Termux](https://f-droid.org/en/packages/com.termux/ "F-Droid")  
+Установить [Termux](https://f-droid.org/ru/packages/com.termux/ "F-Droid")  
 ```
 # Примечание: установка Snoop на Termux продолжительная по времени
 # Войти в домашнюю папку Termux (т.е. просто открыть Termux)
@@ -40,8 +40,9 @@ $ cd ~/snoop
 # Установить зависимости 'requirements'
 $ python3 -m pip install -r requirements.txt
 
-# Чтобы расширить вывод терминала в Termux (по умолчанию 2к строку), например, отображение всей БД опции '--list all [1/2]'  
-добавьте строку 'terminal-transcript-rows=10000' в файл '~/.termux/termux.properties' (фича доступна в Termux v0.114+).  
+# Чтобы расширить вывод терминала в Termux (по умолчанию 2к строк отображение в CLI), например, отображение всей БД опции '--list all [1/2]'  
+добавить строку 'terminal-transcript-rows=10000' в файл '~/.termux/termux.properties' (фича доступна в Termux v0.114+). 
+Перезапустить Termux.  
 
 # Дополнение для устаревших гаджетов (Android 6)
 # Примечание на современных гаджетах пакеты уже предустановлены и настроены
