@@ -326,10 +326,11 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
         results_site['url_main'] = net_info.get("urlMain")
 
 # Пользовательский user-agent браузера (рандомно на каждый сайт).
-        RandHead = (["{'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}",
-        "{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}",
+        RandHead = ([
+        "{'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}",
+        "{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}",
         "{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36 OPR/60.0.3255.109'}",
-        "{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0'}"
+        "{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/89.0'}"
         ])
         RH = random.choice(RandHead)
         headers = json.loads(RH.replace("'",'"'))
@@ -1194,10 +1195,6 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
             file_txt.write("\n" f"Обновлено: " + time.strftime("%d/%m/%Y_%H:%M:%S", time_data) + ".")
             file_txt.close()
 
-            print(Fore.CYAN + "├─Результаты поиска:", "найдено -->", exists_counter, "url (%.0f" % float(timefinish) +"sec)")
-            print(Fore.CYAN + "├──Результаты сохранены в: " + Style.RESET_ALL + "results/*/" + str(username) + ".*")
-
-
 # Запись в html.
             try:
                 file_html = open("results/html/" + username + ".html", "w", encoding="utf-8")
@@ -1332,6 +1329,8 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
             file_csv.close()
 
 # Финишный вывод.
+        print(Fore.CYAN + "├─Результаты поиска:", "найдено -->", exists_counter, "url (%.0f" % float(timefinish) +"sec)")
+        print(Fore.CYAN + "├──Результаты сохранены в: " + Style.RESET_ALL + dirresults + "/results/*/" + str(username) + ".*")
         if censor >= czr:
             print(Fore.CYAN + "├───Дата поискового запроса:", time.strftime("%d/%m/%Y_%H:%M:%S", time_data))
             print(Fore.CYAN + "└────\033[31;1mВнимание!\033[0m", Fore.CYAN + "Нестабильное соединение или Internet Censorship:",
