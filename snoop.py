@@ -584,13 +584,13 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
                     time_ello=("%.0f" % float(ello*1000))
                     if color == True:
                         if dif > 5: #задержка в общем времени
-                            console.print(f"[cyan][*{time_site} ms T] -->", f"[bold red][*{time_ello} ms t]", f"[cyan][*{Ssession_size}]")
+                            console.print(f"[cyan][*{time_site} ms T] >", f"[bold red][*{time_ello} ms t]", f"[cyan][*{Ssession_size}]")
                             console.rule("", style="bold red")
                         else:
-                            console.print(f"[cyan][*{time_site} ms T] -->", f"[cyan][*{time_ello} ms t]", f"[cyan][*{Ssession_size}]")
+                            console.print(f"[cyan][*{time_site} ms T] >", f"[cyan][*{time_ello} ms t]", f"[cyan][*{Ssession_size}]")
                             console.rule("", style="bold blue")
                     else:
-                        console.print(f"[*{time_site} ms T] -->", f"[*{time_ello} ms t]", f"[*{Ssession_size}]", highlight=False)
+                        console.print(f"[*{time_site} ms T] >", f"[*{time_ello} ms t]", f"[*{Ssession_size}]", highlight=False)
                         console.rule(style="color")
 
 # Служебная информация для CSV.
@@ -1343,7 +1343,6 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
                                  FULL[site]['check_time_ms'],
                                  FULL[site]['response_time_ms'],
                                  Ssession
-                                # FULL[site]ште['session_size']/1024
                                  ])
             writer.writerow(['«---------------------------------------',
                              '--------','----', '----------------------------------',
