@@ -433,7 +433,7 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
 # Данные по умолчанию в случае каких-либо сбоев в выполнении запроса.
             http_status = "*???"
             response_text = ""
-            session_size = "er"
+            session_size = "Err"
 # Получить future и убедиться, что оно закончено.
             future = net_info["request_future"]
             r, error_type, response_time = get_response(request_future=future,
@@ -575,22 +575,22 @@ def snoop(username, site_data, verbose=False, norm=False, reports=False, user=Fa
 # Опция '-v'.
                 if verbose == True:
                     if session_size == 0 or session_size is None:
-                        session_size = "Head"
-                    elif session_size == "er":
-                        session_size = "Нет"
+                        Ssession_size = "Head"
+                    elif session_size == "Err":
+                        Ssession_size = "Нет"
                     else:
-                        session_size = str(round(session_size/1024)) + "_Kb"
+                        Ssession_size = str(round(session_size/1024)) + " Kb"
 
                     time_ello=("%.0f" % float(ello*1000))
                     if color == True:
                         if dif > 5: #задержка в общем времени
-                            console.print(f"[cyan][*{time_site} ms T] -->", f"[bold red][*{time_ello} ms t]", f"[cyan][*{session_size}]")
+                            console.print(f"[cyan][*{time_site} ms T] -->", f"[bold red][*{time_ello} ms t]", f"[cyan][*{Ssession_size}]")
                             console.rule("", style="bold red")
                         else:
-                            console.print(f"[cyan][*{time_site} ms T] -->", f"[cyan][*{time_ello} ms t]", f"[cyan][*{session_size}]")
+                            console.print(f"[cyan][*{time_site} ms T] -->", f"[cyan][*{time_ello} ms t]", f"[cyan][*{Ssession_size}]")
                             console.rule("", style="bold blue")
                     else:
-                        console.print(f"[*{time_site} ms T] -->", f"[*{time_ello} ms t]", f"[*{session_size}]", highlight=False)
+                        console.print(f"[*{time_site} ms T] -->", f"[*{time_ello} ms t]", f"[*{Ssession_size}]", highlight=False)
                         console.rule(style="color")
 
 # Служебная информация для CSV.
@@ -1322,10 +1322,16 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
                              'Общее_замедление/мс',
                              'Отклик/мс',
                              'Общее_время/мс',
-                             'Сессия_Kb',
+                             'Сессия/Kb',
                              czr_csv
                              ])
             for site in FULL:
+                if FULL[site]['session_size'] == 0:
+                    Ssession = "Head"
+                elif type(FULL[site]['session_size']) != str:
+                    Ssession = round((FULL.get(site).get("session_size")/1024))
+                else:
+                    Ssession = "Bad"
                 writer.writerow([usernamCSV,
                                  site,
                                  FULL[site]['countryCSV'],
@@ -1336,7 +1342,8 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
                                  FULL[site]['response_time_site_ms'],
                                  FULL[site]['check_time_ms'],
                                  FULL[site]['response_time_ms'],
-                                 FULL[site]['session_size']
+                                 Ssession
+                                # FULL[site]ште['session_size']/1024
                                  ])
             writer.writerow(['«---------------------------------------',
                              '--------','----', '----------------------------------',
