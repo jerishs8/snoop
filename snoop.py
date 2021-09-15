@@ -1181,6 +1181,7 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
 # Крутим user's.
     def starts(SQ):
         kef_user=0
+        ungzip = []
         for username in SQ:
             kef_user+=1
             sort_sites = sort_web if args.country == True else site_data
@@ -1189,7 +1190,6 @@ IPv4/v6; GEO-координаты/ссылки; локации; провайде
                         color=not args.no_func)
 
             exists_counter = 0
-            ungzip = []
             try:
                 file_txt = open("results/txt/" + username + ".txt", "w", encoding="utf-8")
                 #raise Exception("")
