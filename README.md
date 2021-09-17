@@ -4,7 +4,7 @@ Snoop Project for Termux
 ## Snoop Project один из самых перспективных OSINT-инструментов по поиску никнеймов.
 - [X] This is the most powerful software taking into account the CIS location.
 
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoopandroid.png" />  
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoopandroid.png" width="70%" />  
 
 Is your life slideshow? Ask Snoop.  
 Snoop project is developed without taking into account the opinions of the NSA and their friends,  
@@ -15,7 +15,7 @@ that is, it is available to the average user.
 **Self-build software from source**
 
 ## Snoop for Android/Demo  
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Snoop_termux.plugins.png" width="70%" />  
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Snoop_termux.plugins.png" width="90%" />  
 
 **Native Installation**  
 
@@ -159,4 +159,4 @@ $ python3 snoop.py --update y #Требуется установка Git.
 ```
 
 **An example of searching Phone**  
-<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Android%20snoop_run.png" width="60%" />
+<img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Android%20snoop_run.png" width="70%" />
