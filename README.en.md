@@ -42,7 +42,7 @@ $ pip install --upgrade pip
 # Clone the repository
 $ git clone https://github.com/snooppr/snoop -b snoop_termux
 # (if the flash drive is FAT (not ext4), in this case,
-# clone the repository only to the Termux HOME directory)
+# clone the repository only to the Termux home directory)
 
 # Enter the Snoop working directory
 $ cd ~/snoop
@@ -58,6 +58,7 @@ $ python3 -m pip install -r requirements.txt
 # The user can also launch the Snoop Project on the snoop command from anywhere in
 # the cli by creating an alias.  
 $ printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc  
+
 # The user can also run a quick check on the database of the site he is interested in,
 # without using the 'list-all' option, using the 'snoopcheck'command
 $ alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i' >> .bashrc  
