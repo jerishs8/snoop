@@ -21,9 +21,16 @@ that is, it is available to the average user.
 **Self-build software from source**  
 **Native Installation**  
 
-Install [Termux](https://f-droid.org/en/packages/com.termux/ "F-Droid")  
+Install [Termux](https://f-droid.org/en/packages/com.termux/ "Termux with F-Droid, GP Termux is no longer updated!")  
 ```
-# Note: Installing Snoop on Termux is time consuming
+# NOTE_1!: Installing Snoop on Termux is time consuming (minutes).
+# NOTE_2!: if the user has errors with $ 'pkg update', for example due to country censorship,
+# and/or due to the fact that Termux has not been updated for a long time on the user's device,
+# then removing/installing Termux application will not help,
+# since after deletion, old repositories remain on the user's device, the solution is:
+$ termux-change-repo
+# and choose to get updates (for all repo) from another mirror repository.
+
 # Enter Termux home folder (i.e. just open Termux)
 $ termux-setup-storage
 $ pwd #/data/data/com.termux/files/home # default/home directory
