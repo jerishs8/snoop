@@ -50,14 +50,16 @@ $ cd ~/snoop
 $ python3 -m pip install -r requirements.txt
 
 # To expand the terminal output in Termux (by default, 2k lines are displayed in the CLI),  
-for example, displaying the entire database of the option '--list-all [1/2]'  
-add the line 'terminal-transcript-rows=10000' to the file '~/.termux/termux.properties'  
-(the feature is available in Termux v0.114+).  
-Restart Termux. 
+# for example, displaying the entire database of the option '--list-all [1/2]'  
+# add the line 'terminal-transcript-rows=10000' to the file '~/.termux/termux.properties'  
+# (the feature is available in Termux v0.114+).  
+# Restart Termux. 
 
-# The user can also launch the Snoop Project on the snoop command from anywhere in the cli by creating an alias.  
+# The user can also launch the Snoop Project on the snoop command from anywhere in
+# the cli by creating an alias.  
 $ printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc  
-# The user can also run a quick check on the database of the site he is interested in, without using the 'list-all' option, using the 'snoopcheck'command
+# The user can also run a quick check on the database of the site he is interested in,
+# without using the 'list-all' option, using the 'snoopcheck'command
 $ alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i' >> .bashrc  
 # restart Termux. 
 ```

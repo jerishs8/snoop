@@ -49,13 +49,16 @@ $ cd ~/snoop
 # Установить зависимости 'requirements'
 $ python3 -m pip install -r requirements.txt
 
-# Чтобы расширить вывод терминала в Termux (по умолчанию 2к строк отображение в CLI), например, отображение всей БД опции '--list-all [1/2]'  
-добавить строку 'terminal-transcript-rows=10000' в файл '~/.termux/termux.properties' (крайне полезная опция доступна в Termux v0.114+). 
-Перезапустить Termux.  
+# Чтобы расширить вывод терминала в Termux (по умолчанию 2к строк отображение в CLI), например, 
+# отображение всей БД опции '--list-all [1/2]'
+# добавить строку 'terminal-transcript-rows=10000' в файл '~/.termux/termux.properties'
+# (крайне полезная опция доступна в Termux v0.114+). 
+# Перезапустить Termux.  
 
 # Пользователь также может запустить snoop по команде 'snoop' из любого места в CLI, создав alias.  
 $ printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc  
-# Пользователь также может выполнить быструю проверку интересующего его сайта по БД, не используя опцию "--list-all", используя команду "snoopcheck"  
+# Пользователь также может выполнить быструю проверку интересующего его сайта по БД,
+# не используя опцию "--list-all", используя команду "snoopcheck"  
 $ alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i' >> .bashrc  
 # перезапустить Termux.  
 ```
