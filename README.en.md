@@ -5,6 +5,10 @@ Snoop Project for Termux
 - [X] This is the most powerful software taking into account the CIS location.
 
 <p align="center">  
+  <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Snoop_2android.png" />  
+</p>  
+
+<p align="center">  
   <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoopandroid.png" />  
 </p>  
 
