@@ -53,7 +53,7 @@ init(autoreset=True)
 console = Console()
 
 
-vers, vers_code, demo_full = 'v1.3.3', "s", "d"
+vers, vers_code, demo_full = 'v1.3.3A', "s", "d"
 
 print(f"""\033[36m
   ___|
@@ -135,9 +135,19 @@ recensor = 0
 
 
 ## Создание директорий результатов.
+if sys.platform == 'win32':
+    os.environ['LOCALAPPDATA'] + "\\snoop"
+elif Android:
+    try:
+        dirhome = "/data/data/com.termux/files/home/storage/shared/snoop"
+    except Exception:
+        dirhome = os.environ['HOME'] + "/snoop"
+else:
+    dirhome = os.environ['HOME'] + "/snoop"
+
 dirresults = os.getcwd()
-dirhome = os.environ['HOME'] + "/snoop" if sys.platform != 'win32' else os.environ['LOCALAPPDATA'] + "\\snoop"
-dirpath = dirresults if 'source' in version else dirhome
+dirpath = dirresults if 'source' in version and not Android else dirhome
+
 os.makedirs(f"{dirpath}/results", exist_ok=True)
 os.makedirs(f"{dirpath}/results/nicknames/html", exist_ok=True)
 os.makedirs(f"{dirpath}/results/nicknames/txt", exist_ok=True)
@@ -1530,11 +1540,12 @@ function sortList() {
 ## Открывать/нет браузер с результатами поиска.
             if args.no_func is False and exists_counter >= 1:
                 try:
-                    if not Android:
+                    if Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
-                        click.pause(Style.DIM + Fore.CYAN + "\nНажмите любую клавишу для открытия результатов во внешнем браузере")
-                        click.launch(f"file://{dirpath}/results/nicknames/html/{username}.html")
+                        click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя Android " + \
+                        "должны быть установлены приложения: 'Total commander' и 'Chrome browser'\nНажмите любую клавишу для продолжения")
+                        click.launch(f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
                 except Exception:
                     print("\n\033[31;1mНе удалось открыть браузер\033[0m")
 
