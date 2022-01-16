@@ -1540,7 +1540,7 @@ function sortList() {
 ## Открывать/нет браузер с результатами поиска.
             if args.no_func is False and exists_counter >= 1:
                 try:
-                    if Android:
+                    if not Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
                         click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя Android " + \
