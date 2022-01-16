@@ -1560,7 +1560,8 @@ function sortList() {
                             click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
                                         "Android 10+ должны быть установлены приложения: 'Total commander' и 'Chrome browser'" + \
                                         "\nнажмите любую клавишу для продолжения")
-                            click.launch(f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
+                            os.system(f"am start --user 0 -n com.android.chrome/com.google.android.apps.chrome.Main -d " + \
+                                      f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
                         else:
                             click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
                                         "Android 7..9 должно быть установлено приложение: 'Chrome browser'" + \
