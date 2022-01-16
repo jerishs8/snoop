@@ -1550,7 +1550,7 @@ function sortList() {
 ## Открывать/нет браузер с результатами поиска.
             if args.no_func is False and exists_counter >= 1:
                 try:
-                    if Android:
+                    if not Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
                         with open('config android.txt', "r", encoding="utf8") as f_r:
