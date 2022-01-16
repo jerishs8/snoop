@@ -66,6 +66,9 @@ $ printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc
 # не используя опцию "--list-all", используя команду "snoopcheck"  
 $ printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i'" >> .bashrc  
 # перезапустить Termux.  
+# ПРИМЕЧАНИЕ_3!: для авто-открытия результатов поиска во внешнем web-browser пользователь должен указать версию
+# своего Android (7, 8, 9, 10 и т.д.) в файле '~/snoop/config android.txt' (одна строчка). Надстройка - это компромисс между 
+# нестандартизированными между собой: Python --> Termux --> Android. По умолчанию config настроен на использование Android 10+.
 ```
 <p align="center">  
   <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoop_alias.gif" width="40%" />  
