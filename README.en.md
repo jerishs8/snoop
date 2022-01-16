@@ -61,11 +61,11 @@ $ python3 -m pip install -r requirements.txt
 
 # The user can also launch the Snoop Project on the snoop command from anywhere in
 # the cli by creating an alias.  
-$ printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc  
+$ cd && printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc  
 
 # The user can also run a quick check on the database of the site he is interested in,
 # without using the 'list-all' option, using the 'snoopcheck'command
-$ printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i'" >> .bashrc  
+$ cd && printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i'" >> .bashrc  
 # restart Termux.
 # NOTE_3!: to auto-open search results in an external web-browser, the user must specify the version
 # your Android (7, 8, 9, 10, etc.) in '~/snoop/config android.txt' (one line). The superstructure is a compromise between
