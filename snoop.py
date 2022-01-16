@@ -46,7 +46,7 @@ if int(platform.python_version_tuple()[1]) >= 8:
 else:
     python3_8 = False
 
-Android = True if "arm" in platform.platform(aliased=True, terse=0) or "aarch64" in platform.platform(aliased=True, terse=0) else False
+Android = True if hasattr(sys, 'getandroidapilevel') else False
 
 locale.setlocale(locale.LC_ALL, '')
 init(autoreset=True)
@@ -730,6 +730,11 @@ def license_snoop():
             console.print(f"\n[bold red]Используемая версия Snoop: '{version}' написана для платформы Android, " + \
                           f"но кажется используется что-то другое 💻\n\nВыход")
             sys.exit()
+    else:
+        try:
+            T_v = dict(os.environ).get("TERMUX_VERSION")
+        except:
+            T_v = "Not Termux!"
 
     if python3_8 is True:
         rich_v = f", (rich::{version_lib('rich')})"
@@ -743,6 +748,7 @@ def license_snoop():
     console.print('\n', Panel(f"Program: [dim cyan]{version} {str(platform.architecture(executable=sys.executable, bits='', linkage=''))}" + \
                               "[/dim cyan]\n"
                               f"OS: [dim cyan]{platform.platform(aliased=True, terse=0)}[/dim cyan]\n" + \
+                              f"Termux: [dim cyan]{T_v}[/dim cyan]\n" + \
                               f"Locale: [dim cyan]{locale.setlocale(locale.LC_ALL)}[/dim cyan]\n" + \
                               f"Python: [dim cyan]{platform.python_version()}[/dim cyan]\n" + \
                               f"Key libraries: [dim cyan](requests::{requests.__version__}), (certifi::{certifi.__version__}), " + \
@@ -1543,8 +1549,9 @@ function sortList() {
                     if not Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
-                        click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя Android " + \
-                        "должны быть установлены приложения: 'Total commander' и 'Chrome browser'\nНажмите любую клавишу для продолжения")
+                        click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
+                                    "Android 10+ должны быть установлены приложения: 'Total commander' и 'Chrome browser'" + \
+                                    "\nнажмите любую клавишу для продолжения")
                         click.launch(f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
                 except Exception:
                     print("\n\033[31;1mНе удалось открыть браузер\033[0m")
