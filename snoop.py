@@ -731,6 +731,9 @@ def license_snoop():
                           f"но кажется используется что-то другое 💻\n\nВыход")
             sys.exit()
     else:
+        with open('config android.txt', "r", encoding="utf8") as f_r:
+            and_v = ''.join(num for num in list(f_r.read()) if num.isdigit())
+
         try:
             T_v = dict(os.environ).get("TERMUX_VERSION")
         except:
@@ -749,6 +752,7 @@ def license_snoop():
                               "[/dim cyan]\n"
                               f"OS: [dim cyan]{platform.platform(aliased=True, terse=0)}[/dim cyan]\n" + \
                               f"Termux: [dim cyan]{T_v}[/dim cyan]\n" + \
+                              f"Config setting : [dim cyan]Android {and_v}[/dim cyan]\n" + \
                               f"Locale: [dim cyan]{locale.setlocale(locale.LC_ALL)}[/dim cyan]\n" + \
                               f"Python: [dim cyan]{platform.python_version()}[/dim cyan]\n" + \
                               f"Key libraries: [dim cyan](requests::{requests.__version__}), (certifi::{certifi.__version__}), " + \
@@ -1546,15 +1550,26 @@ function sortList() {
 ## Открывать/нет браузер с результатами поиска.
             if args.no_func is False and exists_counter >= 1:
                 try:
-                    if not Android:
+                    if Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
-                        click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
-                                    "Android 10+ должны быть установлены приложения: 'Total commander' и 'Chrome browser'" + \
-                                    "\nнажмите любую клавишу для продолжения")
-                        click.launch(f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
+                        with open('config android.txt', "r", encoding="utf8") as f_r:
+                            and_v = ''.join(num for num in list(f_r.read()) if num.isdigit())
+
+                        if int(and_v) >= 10 :
+                            click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
+                                        "Android 10+ должны быть установлены приложения: 'Total commander' и 'Chrome browser'" + \
+                                        "\nнажмите любую клавишу для продолжения")
+                            click.launch(f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
+                        else:
+                            click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
+                                        "Android 7..9 должно быть установлено приложение: 'Chrome browser'" + \
+                                        "\nнажмите любую клавишу для продолжения")
+                            os.system(f"am start --user 0 -n com.android.chrome/com.google.android.apps.chrome.Main -d " + \
+                                      "file:///storage/emulated/0/snoop/results/nicknames/html/{username}.html")
+
                 except Exception:
-                    print("\n\033[31;1mНе удалось открыть браузер\033[0m")
+                    print(f"\n\033[31;1mНе удалось открыть браузер (проверьте в т.ч. {dirresults}/config android.txt)\033[0m")
 
 
 ## поиск по выбранным пользователям.
