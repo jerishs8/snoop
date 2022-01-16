@@ -67,6 +67,7 @@ $ cd && printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc
 # without using the 'list-all' option, using the 'snoopcheck'command
 $ cd && printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i'" >> .bashrc  
 # restart Termux.
+
 # NOTE_3!: to auto-open search results in an external web-browser, the user must specify the version
 # your Android (7, 8, 9, 10, etc.) in '~/snoop/config android.txt' (one line). The superstructure is a compromise between
 # non-standardized among themselves: Python --> Termux --> Android. Default config is set to use Android 10+ 
