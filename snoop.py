@@ -1566,7 +1566,7 @@ function sortList() {
                                         "Android 7..9 должно быть установлено приложение: 'Chrome browser'" + \
                                         "\nнажмите любую клавишу для продолжения")
                             os.system(f"am start --user 0 -n com.android.chrome/com.google.android.apps.chrome.Main -d " + \
-                                      "file:///storage/emulated/0/snoop/results/nicknames/html/{username}.html")
+                                      f"file:///storage/emulated/0/snoop/results/nicknames/html/{username}.html")
 
                 except Exception:
                     print(f"\n\033[31;1mНе удалось открыть браузер (проверьте в т.ч. {dirresults}/config android.txt)\033[0m")
