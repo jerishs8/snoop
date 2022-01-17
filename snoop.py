@@ -732,12 +732,12 @@ def license_snoop():
             sys.exit()
     else:
         with open('config android.txt', "r", encoding="utf8") as f_r:
-            and_v = ''.join(num for num in list(f_r.read()) if num.isdigit())
+            and_v = int(f_r.read().split()[-1])
 
         try:
             T_v = dict(os.environ).get("TERMUX_VERSION")
         except:
-            T_v = "Not Termux!"
+            T_v = "Not Termux?!"
 
     if python3_8 is True:
         rich_v = f", (rich::{version_lib('rich')})"
@@ -1550,26 +1550,29 @@ function sortList() {
 ## Открывать/нет браузер с результатами поиска.
             if args.no_func is False and exists_counter >= 1:
                 try:
-                    if not Android:
+                    if Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
                         with open('config android.txt', "r", encoding="utf8") as f_r:
-                            and_v = ''.join(num for num in list(f_r.read()) if num.isdigit())
+                            and_v = int(f_r.read().split()[-1])
 
-                        if int(and_v) >= 10 :
+                        if and_v <= 0 : pass
+                        elif and_v <= 9:
                             click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
-                                        "Android 10+ должны быть установлены приложения: 'Total commander' и 'Chrome browser'" + \
-                                        "\nнажмите любую клавишу для продолжения")
-                            click.launch(f"content://com.ghisler.files/storage/emulated/0/snoop/results/nicknames/html/{username}.html")
-                        else:
-                            click.pause(Style.DIM + Fore.CYAN + "\nДля авто-открытия результатов во внешнем браузере у пользователя " + \
-                                        "Android 7..9 должно быть установлено приложение: 'Chrome browser'" + \
-                                        "\nнажмите любую клавишу для продолжения")
+                                        "Android 7..9 должно быть установлено приложение: 'Chrome browser' (см. config android.txt)" + \
+                                        "\n\nнажмите любую клавишу для продолжения")
                             os.system(f"am start --user 0 -n com.android.chrome/com.google.android.apps.chrome.Main -d " + \
                                       f"file:///storage/emulated/0/snoop/results/nicknames/html/{username}.html")
+                        elif and_v >= 10:
+                            click.pause(Style.DIM + Fore.CYAN + "\nДля открытия результатов во внешнем браузере на " + \
+                                        "Android 10+ используйте 'файловый менеджер' (см. config android.txt)" + \
+                                        "\n\nнажмите любую клавишу для продолжения")
+                            os.system(f"am start --user 0 -a android.intent.action.VIEW -d " + \
+                                      f"content://com.android.externalstorage.documents/document/" + \
+                                      f"primary%3Asnoop%2Fresults%2Fnicknames%2Fhtml%2F{username}.html")
 
                 except Exception:
-                    print(f"\n\033[31;1mНе удалось открыть браузер (проверьте в т.ч. {dirresults}/config android.txt)\033[0m")
+                    print(f"\n\033[31;1mНе удалось открыть результаты (проверьте в т.ч. {dirresults}/config android.txt)\033[0m")
 
 
 ## поиск по выбранным пользователям.
