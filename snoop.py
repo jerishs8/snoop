@@ -859,11 +859,17 @@ def run():
     search_group.add_argument("--save-page", "-S", action="store_true", dest="reports", default=False,
                               help="\033[36mС\033[0mохранять найденные странички пользователей в локальные html-файлы"
                              )
-    search_group.add_argument("--cert-off", "-C", default=False, action="store_true", dest="cert",
-                              help="""\033[36mВ\033[0mыкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
-                              на серверах включена на Snoop for Android, что повышает скорость поиска,
-                              но может дать больший percent ложных срабатываний"""
-                             )
+    if Android:
+        search_group.add_argument("--cert-off", "-C", default=False, action="store_true", dest="cert",
+                                  help="""\033[36mВ\033[0mыкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
+                                  на серверах включена на Snoop for Android, что повышает скорость поиска,
+                                  но может дать больший percent ложных срабатываний"""
+                                 )
+    else:
+        search_group.add_argument("--cert-on", "-C", default=False, action="store_true", dest="cert",
+                                  help="""\033[36mВ\033[0mкл проверку сертификатов на серверах. По умолчанию проверка сертификатов
+                                  на серверах отключена, что даёт меньше ошибок и больше результатов при поиске nickname"""
+                                 )
     search_group.add_argument("--headers", "-H <name>", metavar='', dest="headerS", nargs=1, default=None,
                               help="""\033[36mЗ\033[0mадать user-agent вручную, агент заключается в кавычки, по умолчанию для каждого сайта
                                задаётся случайный либо переопреденный user-agent из БД snoop. https://юзерагент.рф/"""
@@ -1550,7 +1556,7 @@ function sortList() {
 ## Открывать/нет браузер с результатами поиска.
             if args.no_func is False and exists_counter >= 1:
                 try:
-                    if Android:
+                    if not Android:
                         webbrowser.open(f"file://{dirpath}/results/nicknames/html/{username}.html")
                     else:
                         with open('config android.txt', "r", encoding="utf8") as f_r:
