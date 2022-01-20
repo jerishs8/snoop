@@ -119,7 +119,7 @@ search arguments:
                         Exclude the selected region from the search,
                         it is permissible to use the '-e' option several times,
                         for example, '-e RU -e WR' exclude Russia and World from search
-  --one-level , -o <country code> 
+  --one-level , -o <country_code> 
                         Include only the selected region in the search,
                         it is permissible to use the '-o' option several times,
                         for example, '-o US -o UA' search for USA and Ukraine
