@@ -752,7 +752,7 @@ def license_snoop():
                               "[/dim cyan]\n"
                               f"OS: [dim cyan]{platform.platform(aliased=True, terse=0)}[/dim cyan]\n" + \
                               f"Termux: [dim cyan]{T_v}[/dim cyan]\n" + \
-                              f"Config setting : [dim cyan]Android {and_v}[/dim cyan]\n" + \
+                              f"Config setting: [dim cyan]Android {and_v}[/dim cyan]\n" + \
                               f"Locale: [dim cyan]{locale.setlocale(locale.LC_ALL)}[/dim cyan]\n" + \
                               f"Python: [dim cyan]{platform.python_version()}[/dim cyan]\n" + \
                               f"Key libraries: [dim cyan](requests::{requests.__version__}), (certifi::{certifi.__version__}), " + \
