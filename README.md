@@ -213,3 +213,5 @@ $ python3 snoop.py --update y #Требуется установка Git.
 <p align="center">  
   <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/Android%20snoop_run.gif" width="40%" />  
 </p>  
+
+ • **27 января сжатие репозитория/если возникли проблемы сделайте 'git clone' по новому**  
