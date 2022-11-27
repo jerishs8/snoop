@@ -62,13 +62,14 @@ $ python3 -m pip install -r requirements.txt
 # Пользователь также может запустить snoop по команде 'snoop' из любого места в CLI, создав alias.  
 $ cd && printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc  
 
-# Пользователь также может выполнить быструю проверку интересующего его сайта по БД,
+# Пользователь также может выполнить быструю проверку интересующего его сайта по БД,  
 # не используя опцию "--list-all", используя команду "snoopcheck"  
 $ cd && printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i'" >> .bashrc  
 # перезапустить Termux.  
 
-# ПРИМЕЧАНИЕ_3!: Snoop довольно умён и может автоматически открывать результаты поиска во внешнем веб-браузере или файловом менеджере.
-# ПРИМЕЧАНИЕ_4!: после отключения РФ от Лондонской точки обмена интернет-трафиком скорость поиска Snoop на моб.операторах Мегафон/Yota упала в 2 раза.
+# ПРИМЕЧАНИЕ_3!: Snoop довольно умён и может автоматически открывать результаты поиска во внешнем веб-браузере:  
+$ cd && pkg install termux-tools; echo 'allow-external-apps=true' >>.termux/termux.properties  
+# ПРИМЕЧАНИЕ_4!: После отключения РФ от Лондонской точки обмена интернет-трафиком скорость поиска Snoop на моб.операторах Мегафон/Yota упала в 2 раза.
 ```
 <p align="center">  
   <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoop_alias.gif" width="40%" />  
