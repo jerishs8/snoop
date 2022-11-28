@@ -68,9 +68,8 @@ $ cd && printf "alias snoop='cd && cd snoop && python snoop.py'" >> .bashrc
 $ cd && printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py --list-all | grep -i'" >> .bashrc  
 # restart Termux.
 
-# NOTE_3!: to auto-open search results in an external web-browser, the user must specify the version
-# your Android (7, 8, 9, 10, etc.) in '~/snoop/config android.txt' (one line). The superstructure is a compromise between
-# non-standardized among themselves: Python --> Termux --> Android. Default config is set to use Android 10+ 
+# NOTE_3!: to auto-open search results in an external web-browser:  
+$ cd && pkg install termux-tools; echo 'allow-external-apps=true' >>.termux/termux.properties  
 ```
 <p align="center">  
   <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoop_alias.gif" width="40%" />  
@@ -191,7 +190,6 @@ $ python3 snoop.py -с -t 9 -f -S -u ~/file.txt -w
 # 'ctrl-c' — abort search
 ```
 Found accounts will be stored in '~/snoop/results/nicknames/*/username. {Txt.csv.html}'.  
-To access the browser to search results on the Android platform, it is desirable to have root rights.  
 csv open in *office, field separator **comma**.    
 
 Destroy **all** search results - delete the directory '~/snoop/results'.

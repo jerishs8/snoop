@@ -69,7 +69,7 @@ $ cd && printf "alias snoopcheck='cd && cd snoop && printf 2 | python snoop.py -
 
 # ПРИМЕЧАНИЕ_3!: Snoop довольно умён и может автоматически открывать результаты поиска во внешнем веб-браузере:  
 $ cd && pkg install termux-tools; echo 'allow-external-apps=true' >>.termux/termux.properties  
-# ПРИМЕЧАНИЕ_4!: После отключения РФ от Лондонской точки обмена интернет-трафиком скорость поиска Snoop на моб.операторах Мегафон/Yota упала в 2 раза.
+# ПРИМЕЧАНИЕ_4!: после отключения РФ от Лондонской точки обмена интернет-трафиком скорость поиска Snoop на моб.операторах Мегафон/Yota упала в 2 раза.
 ```
 <p align="center">  
   <img src="https://raw.githubusercontent.com/snooppr/snoop/master/images/snoop_alias.gif" width="40%" />  
@@ -198,7 +198,6 @@ $ python3 snoop.py -с -t 9 -f -S -u ~/file.txt -w
 **'ctrl + c'** — прервать поиск (остановить корректно ПО).  
 
 Найденные учетные записи будут храниться в '~/snoop/results/nicknames/*/username.{txt.csv.html}'.  
-Для доступа браузера к результатам поиска на платформе Android желательно иметь рут права.  
 csv открывать в *office, разделитель полей **запятая**.  
 
 Уничтожить **все** результаты поиска — удалить каталог '~/snoop/results'.  
