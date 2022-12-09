@@ -77,7 +77,6 @@ $ cd && pkg install termux-tools; echo 'allow-external-apps=true' >>.termux/term
 
 
 ## Using
-**English version — of Snoop see release (available old 'Snoop EN version').**
 ```
 Справка
 
