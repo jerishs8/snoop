@@ -91,7 +91,7 @@ service arguments:
   --donate, -d          Donate to the development of the Snoop Project,
                         get/buy Snoop Full Version
   --autoclean, -a       Delete all reports, clear space
-  --update, -U          Обновить Snoop
+  --update, -U          Update Snoop
 
 plugins arguments:
   --module, -m          OSINT search: use various plugins Snoop ::
@@ -185,7 +185,7 @@ $ python3 snoop.py username1 username2 username3 username4
 # print only found accounts; save pages found
 # of accounts locally; specify a file with a list of wanted accounts;
 # connect to search for Snoop's extensible and updatable web-base:
-$ python3 snoop.py -с -t 9 -f -S -u ~/file.txt -w
+$ python3 snoop.py -c -t 9 -f -S -u ~/file.txt -w
 
 # 'ctrl-c' — abort search
 ```
