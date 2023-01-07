@@ -185,7 +185,7 @@ def module3():
               "[\033[0m\033[32;1mhelp\033[0m\033[36m] --> Справка\n" + \
               "[\033[0m\033[31;1mq\033[0m\033[36m] --> Выход\n")
 
-        Ya = input()
+        Ya = console.input("[cyan]ввод --->  [/cyan]")
 
 # Выход.
         if Ya == "q":
@@ -396,7 +396,7 @@ def module1():
 
         if dip == "":
             uu3 = "Мой ip"
-        elif '.' not in dip:
+        elif '.' not in dip and ':' not in dip:
             print(Style.BRIGHT + Fore.RED + "└──Неверный ввод \n\nвыход" + Style.RESET_ALL)
             sys.exit()
         else:
