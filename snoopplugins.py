@@ -302,7 +302,6 @@ def module1():
 
 
     dip = console.input("\n[cyan]ввод --->  [/cyan]")
-    print('')
 
 # выход.
     if dip == "q":
