@@ -4,6 +4,7 @@
 
 import click
 import csv
+import ipaddress
 import itertools
 import json
 import locale
